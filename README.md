@@ -2,6 +2,8 @@
 
 A Cmd library for C++. Started for learning purposes.
 
+**Note:** Only Linux and GNU/GCC supported.
+
 # Usage
 
 Create a derived class using `Cmd` class then override `HandleCommands` function.
