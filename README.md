@@ -19,3 +19,10 @@ Create a derived class using `Cmd` class then override `HandleCommands` function
 ## See also
 * [Examples](https://www.github.com/umtdg/cmdpp/tree/master/examples)
 
+# TODO
+- [ ] Add tests
+- [ ] Also print stderr in `ShellExecute` (Currently, only stdout is printed)
+- [ ] Auto-completion and command history
+- [ ] Command queue
+- [ ] Functionality to show command helps
+
