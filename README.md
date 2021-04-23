@@ -27,4 +27,5 @@ Create a derived class using `Cmd` class then override `HandleCommands` function
 - [ ] Auto-completion and command history
 - [ ] Command queue
 - [ ] Functionality to show command helps
-
+- [ ] Add color option for prompt
+- [ ] Different output options like error/warning/debug/info
