@@ -17,5 +17,5 @@ Create a derived class using `Cmd` class then override `HandleCommands` function
 * `PostCmd` is called after each `HandleCommands` call.
 
 ## See also
-* [Examples](https://www.github.com/umtdg/cmppp/tree/master/examples)
+* [Examples](https://www.github.com/umtdg/cmdpp/tree/master/examples)
 
