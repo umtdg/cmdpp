@@ -13,6 +13,9 @@ namespace libcmd {
             const std::string &command,
             std::vector<std::string> &args
     ) {
+		// unused parameter
+		(void)args;
+
         ostream << command << '\n';
 
         if (command == "exit") {

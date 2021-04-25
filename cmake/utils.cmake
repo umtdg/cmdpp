@@ -1,18 +1,11 @@
 macro(config_compiler_and_linker)
-    set(cxx_base_flags "-Wall -Wshadow -Werror")
-    if (NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0.0)
-        set(cxx_base_flags "${cxx_base_flags} -Wno-error=dangling-else")
-    endif ()
-    set(cxx_exception_flags "-fexceptions")
-    set(cxx_no_exception_flags "-fno-exceptions")
-    set(cxx_strict_flags
-            "-Wextra -Wno-unused-parameter")
+	set(cxx_base_flags "-Wall -Wshadow -Werror")
+	set(cxx_strict_flags "-Wextra -Wunused-parameter")
+	set(cxx_exception "-fexceptions")
 
-    set(cxx_exception "${cxx_base_flags} ${cxx_exception_flags}")
-    set(cxx_no_exception
-            "${CMAKE_CXX_FLAGS} ${cxx_base_flags} ${cxx_no_exception_flags}")
-    set(cxx_default "${cxx_exception}")
-    set(cxx_strict "${cxx_default} ${cxx_strict_flags}")
+	set(cxx_exception "${cxx_base_flags} ${cxx_exception_flags}")
+	set(cxx_default "${cxx_exception}")
+	set(cxx_strict "${cxx_default} ${cxx_strict_flags}")
 endmacro()
 
 function(cxx_library_with_type name type cxx_flags)
