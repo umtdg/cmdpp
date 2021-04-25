@@ -2,7 +2,7 @@
 
 A Cmd library for C++. Started for learning purposes.
 
-**Note:** Only Linux and GNU/GCC supported.
+**Note:** Supports only Linux
 
 # Usage
 
