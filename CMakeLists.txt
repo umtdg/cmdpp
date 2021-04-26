@@ -33,9 +33,9 @@ include_directories(${CMDPP_BUILD_INCLUDE_DIRS})
 cxx_library(cmdpp "${cxx_strict}" src/Cmd.cpp src/utils.cpp)
 
 if (CMDPP_BUILD_EXAMPLES)
-	cxx_executable(example1 examples cmdpp examples/example1.cpp)	
-	cxx_executable(example2 examples cmdpp examples/example2.cpp)	
-	cxx_executable(example3 examples cmdpp examples/example3.cpp)	
+	cxx_executable(example1 examples cmdpp examples/example1.cpp)
+	cxx_executable(example2 examples cmdpp examples/example2.cpp)
+	cxx_executable(example3 examples cmdpp examples/example3.cpp)
 endif()
 
 if (CMDPP_BUILD_TESTS)
