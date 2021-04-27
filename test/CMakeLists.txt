@@ -13,3 +13,4 @@ set(TEST_INCLUDE_DIRS
 include_directories("${TEST_INCLUDE_DIRS}")
 
 set(LIBS gtest_main cmdpp)
+cmdpp_cxx_test(cmdpp_utils_test "${LIBS}")
