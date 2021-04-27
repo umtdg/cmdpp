@@ -34,6 +34,8 @@ if (CMDPP_BUILD_EXAMPLES)
 endif()
 
 if (CMDPP_BUILD_TESTS)
-	# For future use.
+	enable_testing()
+	include(GoogleTest)
+	add_subdirectory(test)
 endif()
 

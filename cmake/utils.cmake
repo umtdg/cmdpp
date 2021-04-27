@@ -74,3 +74,19 @@ function(cxx_executable name dir libs)
     cxx_executable_with_flags(
             ${name} "${cxx_default}" "${libs}" "${dir}/${name}.cpp" ${ARGN})
 endfunction()
+
+function(cmdpp_cxx_test name libs)
+	add_executable(${name} "${cmdpp_SOURCE_DIR}/test/${name}.cpp" ${ARGN})
+	
+	foreach (lib "${libs}")
+		target_link_libraries(${name} ${lib})
+	endforeach()
+
+	set_target_properties(${name} PROPERTIES FOLDER "${cmdpp_SOURCE_DIR}/test")
+	set_target_properties(${name}
+		PROPERTIES
+		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+
+	add_test(NAME "${name}_test" COMMAND ${name})
+endfunction()
+
