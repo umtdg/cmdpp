@@ -9,6 +9,7 @@ namespace libcmd {
         std::istringstream iss(s);
         std::string token;
         while (std::getline(iss, token, delim)) {
+            if (token.empty()) continue;
             tokens.push_back(token);
         }
         return tokens;
