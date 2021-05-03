@@ -15,8 +15,9 @@ protected:
 public:
     explicit example(std::string _prompt) :
             libcmd::Cmd(std::move(_prompt)) {
-        // add commands here or in preloop or
-        // inside any function inside the class
+        // add commands here or make AddCommand
+        // function public and add functions outside
+        // of class
         AddCommand("echo", &example::echo);
         AddCommand("exit", &example::exit);
     }
