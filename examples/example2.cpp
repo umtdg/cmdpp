@@ -9,7 +9,7 @@
 
 class example : public libcmd::Cmd {
 public:
-    explicit example(std::string _prompt, std::ostream &_ostream, std::istream &_istream) :
+    example(std::string _prompt, std::ostream &_ostream, std::istream &_istream) :
             libcmd::Cmd(std::move(_prompt), _ostream, _istream) {}
 
 protected:
