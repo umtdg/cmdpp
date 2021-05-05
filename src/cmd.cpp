@@ -1,5 +1,6 @@
 #include "cmdpp/cmd.hpp"
 #include "cmdpp/utils.hpp"
+#include "cmdpp/readline.hpp"
 
 #include <memory>
 #include <stdexcept>
@@ -47,16 +48,25 @@ namespace libcmd {
 
     void Cmd::CmdLoop() {
         running = true;
+
         std::string commandline;
+        libcmd::Readline readline{prompt};
 
         PreLoop();
 
         while (running) {
-            ostream << prompt << " ";
-            std::getline(istream, commandline);
+            if (use_readline) {
+                commandline = readline();
 
-            if (std::all_of(commandline.begin(), commandline.end(), isspace)) {
-                continue;
+                if (commandline.empty())
+                    continue;
+            } else {
+                ostream << prompt << " ";
+                std::getline(istream, commandline);
+
+                if (libcmd::is_empty_or_whitespace(commandline)) {
+                    continue;
+                }
             }
 
             PreCmd();

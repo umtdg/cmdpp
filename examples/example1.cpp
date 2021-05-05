@@ -26,9 +26,8 @@ public:
 };
 
 int main() {
-    example cmd("(prompt)");
+    example cmd("(prompt) ");
     cmd.CmdLoop();
 
     return 0;
 }
-

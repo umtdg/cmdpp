@@ -10,6 +10,7 @@ namespace libcmd {
         bool running;
         std::ostream &ostream;
         std::istream &istream;
+        bool use_readline;
 
     protected:
         // Main command handler. This needs to be overridden.
@@ -49,13 +50,17 @@ namespace libcmd {
             prompt(std::move(_prompt)),
             running(false),
             ostream(std::cout),
-            istream(std::cin) {}
+            istream(std::cin),
+            use_readline(true) {}
 
         Cmd(std::string _prompt, std::ostream &_ostream, std::istream &_istream) :
                 prompt(std::move(_prompt)),
                 running(false),
                 ostream(_ostream),
-                istream(_istream) {}
+                istream(_istream) {
+            // only use readline when input stream is stdin
+            if (&istream == &std::cin) use_readline = true;
+        }
 
         ~Cmd() = default;
 
