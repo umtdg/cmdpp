@@ -1,4 +1,4 @@
-#include "cmdpp/Cmd.hpp"
+#include "cmdpp/cmd.hpp"
 #include "cmdpp/utils.hpp"
 
 #include <memory>

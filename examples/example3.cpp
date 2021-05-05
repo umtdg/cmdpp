@@ -1,7 +1,7 @@
 // Example using a map to store command functions and calling
 // them in HandleCommands
 
-#include "cmdpp/Cmd.hpp"
+#include "cmdpp/cmd.hpp"
 
 #include <map>
 #include <vector>

@@ -1,6 +1,6 @@
 // Example using a file for input and another file for output.
 
-#include "cmdpp/Cmd.hpp"
+#include "cmdpp/cmd.hpp"
 
 #include <vector>
 #include <string>

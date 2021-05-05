@@ -1,6 +1,6 @@
 // Example using std::cout and std::cin as output and input streams.
 
-#include "cmdpp/Cmd.hpp"
+#include "cmdpp/cmd.hpp"
 
 #include <iostream>
 #include <vector>
