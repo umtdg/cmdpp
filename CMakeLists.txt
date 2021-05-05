@@ -25,7 +25,7 @@ set(CMDPP_BUILD_INCLUDE_DIRS
 	"${cmdpp_SOURCE_DIR}")
 include_directories(${CMDPP_BUILD_INCLUDE_DIRS})
 
-cxx_library(cmdpp "${cxx_strict}" src/Cmd.cpp src/utils.cpp)
+cxx_library(cmdpp "${cxx_strict}" src/cmd.cpp src/utils.cpp src/readline.cpp)
 
 if (CMDPP_BUILD_EXAMPLES)
 	cxx_executable(example1 examples cmdpp examples/example1.cpp)
