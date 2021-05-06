@@ -1,6 +1,5 @@
 #include "cmdpp/cmd.hpp"
 #include "cmdpp/utils.hpp"
-#include "cmdpp/readline.hpp"
 
 #include <memory>
 #include <stdexcept>
