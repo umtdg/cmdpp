@@ -71,7 +71,7 @@ No public or protected properties.
 # TODO
 - [ ] Add tests
 - [ ] Also print stderr in `ShellExecute` (Currently, only stdout is printed)
-- [ ] Auto-completion and command history
+- [x] Auto-completion and command history
 - [ ] Command queue
 - [ ] Functionality to show command helps
 - [ ] Add color option for prompt
