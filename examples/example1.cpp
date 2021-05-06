@@ -5,28 +5,17 @@
 #include <iostream>
 #include <vector>
 
-class example : public libcmd::Cmd {
-public:
-    explicit example(std::string _prompt) :
-            libcmd::Cmd(std::move(_prompt)) {}
-
-    void HandleCommands(const std::string &command, std::vector<std::string> &args) override {
-        if (command == "exit") {
-            running = false;
-        } else if (command == "echo") {
-            for (const std::string &arg : args) {
-                ostream << arg << '\n';
-            }
-        } else {
-            ostream << "Command '" << command << "' not found\n";
-        }
-
-        ostream.flush();
+void echo(const libcmd::Cmd::ArgType &args, std::ostream &ostream) {
+    size_t argc = args.size();
+    for (size_t i = 0; i < argc - 1; i++) {
+        ostream << args[i] << ' ';
     }
-};
+    ostream << args[argc - 1] << '\n';
+}
 
 int main() {
-    example cmd("(prompt) ");
+    libcmd::Cmd cmd("(prompt) ");
+    cmd.AddCommand("echo", echo);
     cmd.CmdLoop();
 
     return 0;

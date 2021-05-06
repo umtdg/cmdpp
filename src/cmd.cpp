@@ -7,25 +7,20 @@
 #include <string>
 #include <array>
 #include <algorithm>
+#include <utility>
 
 namespace libcmd {
 
-    void Cmd::HandleCommands(
-            const std::string &command,
-            std::vector<std::string> &args
-    ) {
-		// unused parameter
-		(void)args;
+    void Cmd::HandleCommands(const std::string &command, const Cmd::ArgType &args) {
+        if (command == exit_command) {
+            PreExit();
 
-        ostream << command << '\n';
-
-        if (command == "exit") {
             running = false;
+        } else if (commands.find(command) != commands.end()) {
+            commands[command](args, ostream);
         } else {
             ostream << "Command '" << command << "' not found\n";
         }
-
-        ostream.flush();
     }
 
     void Cmd::ShellExecute(const std::string &commandline) {
@@ -50,7 +45,6 @@ namespace libcmd {
         running = true;
 
         std::string commandline;
-        libcmd::Readline readline{prompt};
 
         PreLoop();
 
@@ -88,6 +82,15 @@ namespace libcmd {
         }
 
         PostLoop();
+    }
+
+    void Cmd::AddCommand(const std::string &s, CmdFunctionType f) {
+        commands[s] = std::move(f);
+
+        // if using readline, add commands to vocabulary
+        if (use_readline) {
+            readline.AddToVocab(s);
+        }
     }
 
 } // namespace libcmd

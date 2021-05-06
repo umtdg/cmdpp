@@ -1,23 +1,37 @@
+#include "cmdpp/readline.hpp"
+
 #include <iostream>
 #include <vector>
 #include <string>
+#include <functional>
+#include <unordered_map>
 
 namespace libcmd {
 
     class Cmd {
+    public:
+        using ArgType = std::vector<std::string>;
+        using CmdFunctionType = std::function<void(const ArgType &, std::ostream &)>;
+
     protected:
         std::string prompt;
-        bool running;
         std::ostream &ostream;
         std::istream &istream;
+
+        bool running;
         bool use_readline;
+
+        std::string exit_command;
+        std::unordered_map<std::string, CmdFunctionType> commands;
+
+        Readline readline;
 
     protected:
         // Main command handler. This needs to be overridden.
         // Only handles 'exit' command.
         virtual void HandleCommands(
                 const std::string &command,
-                std::vector<std::string> &args
+                const ArgType &args
         );
 
         // Called when a command entered with '!' prefix.
@@ -41,25 +55,35 @@ namespace libcmd {
         // Called after each command.
         virtual void PostCmd() {}
 
+        // Called before exit command is executed
+        virtual void PreExit() {}
+
         /* PRE/POST EVENT FUNCTIONS */
 
     public:
         // Constructor with single _prompt parameter defaults
         // std::cout and std::cin as output and input streams.
         explicit Cmd(std::string _prompt) :
-            prompt(std::move(_prompt)),
-            running(false),
-            ostream(std::cout),
-            istream(std::cin),
-            use_readline(true) {}
+            Cmd(std::move(_prompt), "exit") {}
+
+        Cmd(std::string _prompt, std::string _exit_command) :
+            Cmd(std::move(_prompt), std::move(_exit_command), std::cout, std::cin) {}
 
         Cmd(std::string _prompt, std::ostream &_ostream, std::istream &_istream) :
-                prompt(std::move(_prompt)),
-                running(false),
-                ostream(_ostream),
-                istream(_istream) {
-            // only use readline when input stream is stdin
-            if (&istream == &std::cin) use_readline = true;
+            Cmd(std::move(_prompt), "exit", _ostream, _istream)
+        { }
+
+        Cmd(std::string _prompt, std::string _exit_command,
+            std::ostream &_ostream, std::istream &_istream) :
+            prompt(std::move(_prompt)),
+            ostream(_ostream),
+            istream(_istream),
+            running(false),
+            exit_command(std::move(_exit_command)),
+            readline(std::move(_prompt)) {
+            if (&istream == &std::cin) {
+                use_readline = true;
+            }
         }
 
         ~Cmd() = default;
@@ -73,6 +97,8 @@ namespace libcmd {
         Cmd &operator=(Cmd &&) = delete;
 
         void CmdLoop();
+
+        void AddCommand(const std::string &s, CmdFunctionType f);
     };
 
 } //namespace libcmd

@@ -22,4 +22,10 @@ namespace libcmd {
 
         return res;
     }
+
+    void Readline::AddToVocab(const std::string &s) {
+        if (!is_empty_or_whitespace(s)) {
+            vocab.push_back(s);
+        }
+    }
 } // namespace libcmd
