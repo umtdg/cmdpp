@@ -14,5 +14,10 @@ namespace libcmd {
         std::string operator()();
 
         void AddToVocab(const std::string &s);
+
+    private:
+        static char **CommandCompletion(const char *text, int start, int end);
+
+        static char *CommandGenerator(const char *text, int state);
     };
 } // namespace libcmd

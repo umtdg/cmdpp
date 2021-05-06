@@ -80,9 +80,10 @@ namespace libcmd {
             istream(_istream),
             running(false),
             exit_command(std::move(_exit_command)),
-            readline(std::move(_prompt)) {
+            readline(prompt) {
             if (&istream == &std::cin) {
                 use_readline = true;
+                readline.AddToVocab(exit_command);
             }
         }
 
