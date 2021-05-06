@@ -84,6 +84,8 @@ namespace libcmd {
     }
 
     void Cmd::AddCommand(const std::string &s, CmdFunctionType f) {
+        if (is_empty_or_whitespace(s)) return;
+
         commands[s] = std::move(f);
 
         // if using readline, add commands to vocabulary
