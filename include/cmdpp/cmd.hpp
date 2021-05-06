@@ -29,7 +29,7 @@ namespace libcmd {
     protected:
         // Main command handler. This needs to be overridden.
         // Only handles 'exit' command.
-        virtual void HandleCommands(
+        void HandleCommands(
                 const std::string &command,
                 const ArgType &args
         );
