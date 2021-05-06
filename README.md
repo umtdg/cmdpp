@@ -7,7 +7,7 @@ A Cmd library for C++. Started for learning purposes.
 # Usage
 
 * _Optional_: Create a derived class from `Cmd` class.
-* Define your functions in a global scope. If using a derived class of `Cmd` class, then these functions should not be members of the class.
+* Define your functions in a global scope. Functions should match `CmdFunctionType`. If using a derived class of `Cmd` class, then these functions should not be members of the class.
 * Create an object of `Cmd` class or created derived class, and add your functions using `Cmd::AddCommand`.
 * Call `CmdLoop` to start the application loop.
 
