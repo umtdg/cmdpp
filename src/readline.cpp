@@ -37,20 +37,10 @@ namespace libcmd {
 
     void Readline::GenerateMatches(const char *text) {
         std::string stext{text};
-        auto keyContains = [&stext](const std::string &item) {
-            return item.find(stext) != std::string::npos;
-        };
-
-        auto iterator = std::find_if(
-                currentReadline->vocab.begin(),
-                currentReadline->vocab.end(),
-                keyContains);
-        while (iterator != currentReadline->vocab.end()) {
-            matches.push_back(*iterator);
-            iterator = std::find_if(
-                    std::next(iterator),
-                    currentReadline->vocab.end(),
-                    keyContains);
+        for (const std::string &word : vocab) {
+            if (word.find(stext) != std::string::npos) {
+                matches.push_back(word);
+            }
         }
     }
 
