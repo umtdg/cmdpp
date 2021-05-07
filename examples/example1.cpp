@@ -26,6 +26,12 @@ CmdFuncDecl(foocat) {
     ostream.flush();
 }
 
+CmdFuncDecl(catfoo) {
+    ostream << "catfoo\n";
+
+    ostream.flush();
+}
+
 CmdFuncDecl(foo) {
     ostream << "foo\n";
 
@@ -36,6 +42,7 @@ int main() {
     libcmd::Cmd cmd("(prompt) ");
     cmd.AddCommand("echo", echo);
     cmd.AddCommand("foocat", foocat);
+    cmd.AddCommand("catfoo", catfoo);
     cmd.AddCommand("foo", foo);
     cmd.CmdLoop();
 
