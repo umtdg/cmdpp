@@ -57,7 +57,7 @@ namespace libcmd {
                 ostream << prompt << " ";
                 std::getline(istream, commandline);
 
-                if (libcmd::is_empty_or_whitespace(commandline)) {
+                if (libcmd::IsEmptyOrWhitespace(commandline)) {
                     continue;
                 }
             }
@@ -70,7 +70,7 @@ namespace libcmd {
                 continue;
             }
 
-            std::vector<std::string> args = split(commandline, ' ');
+            std::vector<std::string> args = Split(commandline, ' ');
             std::string command(args[0]);
 
             args.erase(args.begin());
@@ -84,7 +84,7 @@ namespace libcmd {
     }
 
     void Cmd::AddCommand(const std::string &s, CmdFunctionType f) {
-        if (is_empty_or_whitespace(s)) return;
+        if (IsEmptyOrWhitespace(s)) return;
 
         commands[s] = std::move(f);
 
