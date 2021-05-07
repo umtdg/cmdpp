@@ -53,7 +53,7 @@ A class used to read commands from either user or a file, execute them and print
 * `PreExit`: Called in _exit_command_ before `running` is set to `false`.
 
 ## Readline Class
-A simple wrapper class for GNU Readline. Only supports history right now. Auto-completion is on the way.
+A simple wrapper class for GNU Readline. Supports history and auto-completion.
 
 ### Constructors
 * `Readline(prompt)`: Initializes a new `Readline` object with given `prompt`.
