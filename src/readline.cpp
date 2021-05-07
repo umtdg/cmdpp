@@ -4,6 +4,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <memory>
+#include <algorithm>
 
 namespace libcmd {
     Readline *currentReadline = nullptr;
@@ -18,11 +19,10 @@ namespace libcmd {
 
         std::string res{line};
 
-        if (is_empty_or_whitespace(res))
+        if (!IsEmptyOrWhitespace(res))
+            add_history(res.c_str());
+        else
             res = "";
-
-        if (!res.empty())
-            add_history(line);
 
         free(line);
 
@@ -30,8 +30,27 @@ namespace libcmd {
     }
 
     void Readline::AddToVocab(const std::string &s) {
-        if (!is_empty_or_whitespace(s)) {
+        if (!IsEmptyOrWhitespace(s)) {
             vocab.push_back(s);
+        }
+    }
+
+    void Readline::GenerateMatches(const char *text) {
+        std::string stext{text};
+        auto keyContains = [&stext](const std::string &item) {
+            return item.find(stext) != std::string::npos;
+        };
+
+        auto iterator = std::find_if(
+                currentReadline->vocab.begin(),
+                currentReadline->vocab.end(),
+                keyContains);
+        while (iterator != currentReadline->vocab.end()) {
+            matches.push_back(*iterator);
+            iterator = std::find_if(
+                    std::next(iterator),
+                    currentReadline->vocab.end(),
+                    keyContains);
         }
     }
 
@@ -45,26 +64,19 @@ namespace libcmd {
     }
 
     char *Readline::CommandGenerator(const char *text, int state) {
-        static std::vector<std::string> matches;
         static size_t match_index = 0;
 
         if (state == 0) {
-            matches.clear();
+            currentReadline->matches.clear();
             match_index = 0;
 
-            std::string stext{text};
-            size_t text_len = stext.size();
-            for (const auto& word : currentReadline->vocab) {
-                if (word.size() >= text_len && word.compare(0, text_len, stext) == 0) {
-                    matches.push_back(word);
-                }
-            }
+            currentReadline->GenerateMatches(text);
         }
 
-        if (match_index >= matches.size()) {
+        if (match_index >= currentReadline->matches.size()) {
             return nullptr;
         } else {
-            return strdup(matches[match_index++].c_str());
+            return strdup(currentReadline->matches[match_index++].c_str());
         }
     }
 } // namespace libcmd
