@@ -69,10 +69,13 @@ No public or protected properties.
 * [Examples](https://www.github.com/umtdg/cmdpp/tree/master/examples)
 
 # TODO
-- [ ] Add tests
-- [ ] Also print stderr in `ShellExecute` (Currently, only stdout is printed)
-- [x] Auto-completion and command history
 - [ ] Command queue
 - [ ] Functionality to show command helps
 - [ ] Add color option for prompt
+- [ ] Add more examples (or one big example showing the usage clearly)
+- [ ] Add tests
+- [ ] Also print stderr in `ShellExecute` (Currently, only stdout is printed)
 - [ ] Different output options like error/warning/debug/info
+
+# Completed
+- [x] Auto-completion and command history
