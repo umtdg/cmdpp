@@ -13,7 +13,7 @@ TEST(cmdpp_utils_test, split_string_without_empty_tokens) {
     size_t expected_len = 5;
     std::string s("This is a test message");
 
-    std::vector<std::string> actual = libcmd::split(s, ' ');
+    std::vector<std::string> actual = libcmd::Split(s, ' ');
 
     size_t actual_len = actual.size();
     ASSERT_EQ(actual_len, expected_len);
@@ -32,7 +32,7 @@ TEST(cmdpp_utils_test, split_string_with_empty_tokens) {
     size_t expected_len = 4;
     std::string s("command  arg1    arg2 arg3");
 
-    std::vector<std::string> actual = libcmd::split(s, ' ');
+    std::vector<std::string> actual = libcmd::Split(s, ' ');
 
     size_t actual_len = actual.size();
     ASSERT_EQ(actual_len, expected_len);
