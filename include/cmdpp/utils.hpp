@@ -5,8 +5,8 @@
 namespace libcmd {
 
     // Split string with given delimiter into vector.
-    std::vector<std::string> split(const std::string &s, char delim);
+    std::vector<std::string> Split(const std::string &s, char delim);
 
-    bool is_empty_or_whitespace(const std::string &s);
+    bool IsEmptyOrWhitespace(const std::string &s);
 
 } //namespace libcmd
