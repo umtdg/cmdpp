@@ -59,7 +59,7 @@ A simple wrapper class for GNU Readline. Supports history and auto-completion.
 * `Readline(prompt)`: Initializes a new `Readline` object with given `prompt`.
 
 ### Properties
-No public or protected properties.
+No public properties.
 
 ### Methods
 * `AddToVocab`: Adds given string to vocabulary. This is used for auto-completion.
