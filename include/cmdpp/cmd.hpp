@@ -24,7 +24,7 @@ namespace cmdpp {
         bool running;
         bool use_readline;
 
-        std::string exit_command;
+        std::string exitCommand;
         std::unordered_map<std::string, CmdFunctionType> commands;
 
         Readline readline;
@@ -78,15 +78,15 @@ namespace cmdpp {
 
         Cmd(std::string _prompt, std::string _exit_command,
             std::ostream &_ostream, std::istream &_istream) :
-            prompt(std::move(_prompt)),
-            ostream(_ostream),
-            istream(_istream),
-            running(false),
-            exit_command(std::move(_exit_command)),
-            readline(prompt) {
+                prompt(std::move(_prompt)),
+                ostream(_ostream),
+                istream(_istream),
+                running(false),
+                exitCommand(std::move(_exit_command)),
+                readline(prompt) {
             if (&istream == &std::cin) {
                 use_readline = true;
-                readline.AddToVocab(exit_command);
+                readline.AddToVocab(exitCommand);
             }
         }
 

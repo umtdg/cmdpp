@@ -9,7 +9,7 @@
 namespace cmdpp {
 
     void Cmd::HandleCommands(const std::string &command, const Cmd::ArgType &args) {
-        if (command == exit_command) {
+        if (command == exitCommand) {
             PreExit();
 
             running = false;

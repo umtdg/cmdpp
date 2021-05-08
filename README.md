@@ -25,9 +25,9 @@ A class used to read commands from either user or a file, execute them and print
 
 ### Constructors
 * `Cmd(prompt)`: Initializes a new `Cmd` object with default values for each property.
-* `Cmd(prompt, exit_command)`: Initializes a new `Cmd` object with given `prompt` and `exit_command` and with default `ostream` and `istream`.
-* `Cmd(prompt, ostream, istream)`: Initializes a new `Cmd` object with given `prompt`, `ostream` and `istream`, defaulting `exit_command` to `exit`.
-* `Cmd(prompt, exit_command, ostream, istream)`: Initializes a new `Cmd` object with given `prompt`, `exit_command`, `ostream` and `istream`.
+* `Cmd(prompt, exitCommand)`: Initializes a new `Cmd` object with given `prompt` and `exitCommand` and with default `ostream` and `istream`.
+* `Cmd(prompt, ostream, istream)`: Initializes a new `Cmd` object with given `prompt`, `ostream` and `istream`, defaulting `exitCommand` to `exit`.
+* `Cmd(prompt, exitCommand, ostream, istream)`: Initializes a new `Cmd` object with given `prompt`, `exitCommand`, `ostream` and `istream`.
 
 **Note**: Destructor, copy/move constructors and copy/move operators are deleted.
 
@@ -37,12 +37,12 @@ A class used to read commands from either user or a file, execute them and print
 * `std::istream &istream`: Stream which is used to read input. Defaults to `std::cin`
 * `bool running`: Application loop's state. This is set to `false` when exiting.
 * `bool use_readline`: Flag to use whether `Readline` class to get input or not. This is set to `true` automatically when `std::cin` is given to `istream` member.
-* `std::string exit_command`: Command used to exit the loop. By default, this only sets `running` to `false`. Value defaults to `exit`.
+* `std::string exitCommand`: Command used to exit the loop. By default, this only sets `running` to `false`. Value defaults to `exit`.
 * `std::unordererd_map<std::string, CmdFunctionType> commands`: Command list to execute given inputs from.
 * `Readline readilne`: An object of `Readline` class to use when `use_readline` is set to `true`.
 
 ### Methods
-* `HandleCommands`: Handles given input. Sets `running` to `false` when `exit_command` is entered. Otherwise, checks the map `commands`, and executes the corresponding function if exists.
+* `HandleCommands`: Handles given input. Sets `running` to `false` when `exitCommand` is entered. Otherwise, checks the map `commands`, and executes the corresponding function if exists.
 * `ShellExecute`: Executed when a command starting with `!` is entered. Currently, only prints the `stdout` of given command.
 * `CmdLoop`: Handles the I/O operations and related pre/post events.
 * `AddCommand`: Adds command to `commands` map. Given function should not be a member function.
