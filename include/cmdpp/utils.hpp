@@ -11,4 +11,6 @@ namespace libcmd {
 
     bool IsEmptyOrWhitespace(const std::string &s);
 
-} //namespace libcmd
+} //namespace cmdpp
+
+#endif // #ifndef CMDPP_UTILS_H
