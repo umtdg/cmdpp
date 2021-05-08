@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-namespace libcmd {
+namespace cmdpp {
     class Readline {
 
     private:
@@ -33,6 +33,6 @@ namespace libcmd {
 
         static char *CommandGenerator(const char *text, int state);
     };
-} // namespace libcmd
+} // namespace cmdpp
 
 #endif // #ifndef CMDPP_READLINE_H

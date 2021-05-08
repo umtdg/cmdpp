@@ -6,7 +6,7 @@
 #include <memory>
 #include <algorithm>
 
-namespace libcmd {
+namespace cmdpp {
     Readline *currentReadline = nullptr;
 
     Readline::Readline(std::string _prompt) :
@@ -73,4 +73,4 @@ namespace libcmd {
             return strdup(currentReadline->matches[match_index++].c_str());
         }
     }
-} // namespace libcmd
+} // namespace cmdpp

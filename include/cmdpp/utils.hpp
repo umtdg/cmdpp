@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-namespace libcmd {
+namespace cmdpp {
 
     // Split string with given delimiter into vector.
     std::vector<std::string> Split(const std::string &s, char delim);

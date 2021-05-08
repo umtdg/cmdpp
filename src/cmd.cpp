@@ -6,7 +6,7 @@
 #include <string>
 #include <array>
 
-namespace libcmd {
+namespace cmdpp {
 
     void Cmd::HandleCommands(const std::string &command, const Cmd::ArgType &args) {
         if (command == exit_command) {
@@ -55,7 +55,7 @@ namespace libcmd {
                 ostream << prompt << " ";
                 std::getline(istream, commandline);
 
-                if (libcmd::IsEmptyOrWhitespace(commandline)) {
+                if (cmdpp::IsEmptyOrWhitespace(commandline)) {
                     continue;
                 }
             }
@@ -92,5 +92,5 @@ namespace libcmd {
         }
     }
 
-} // namespace libcmd
+} // namespace cmdpp
 

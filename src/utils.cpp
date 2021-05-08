@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <sstream>
 
-namespace libcmd {
+namespace cmdpp {
 
     std::vector<std::string> Split(const std::string &s, char delim) {
         std::vector<std::string> tokens;
@@ -21,4 +21,4 @@ namespace libcmd {
         return std::all_of(s.begin(), s.end(), isspace);
     }
 
-} //namespace libcmd
+} //namespace cmdpp

@@ -1,15 +1,16 @@
 // Example using a file for input and another file for output.
 
 #include "cmdpp/cmd.hpp"
+#include "cmdpp/readline.hpp"
 
 #include <vector>
 #include <string>
 #include <fstream>
 
-class example : public libcmd::Cmd {
+class example : public cmdpp::Cmd {
 public:
     explicit example(std::string _prompt) :
-            libcmd::Cmd(std::move(_prompt), "bye") {}
+            cmdpp::Cmd(std::move(_prompt), "bye") {}
 
 protected:
     void PostCmd() override {
@@ -21,7 +22,7 @@ protected:
     }
 };
 
-void echo(const libcmd::Cmd::ArgType &args, std::ostream &ostream) {
+void echo(const cmdpp::Cmd::ArgType &args, std::ostream &ostream) {
     size_t argc = args.size();
     for (size_t i = 0; i < argc - 1; i++) {
         ostream << args[i] << ' ';

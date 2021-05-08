@@ -9,7 +9,7 @@
 #include <functional>
 #include <unordered_map>
 
-namespace libcmd {
+namespace cmdpp {
 
     class Cmd {
     public:
@@ -105,6 +105,6 @@ namespace libcmd {
         void AddCommand(const std::string &s, CmdFunctionType f);
     };
 
-} //namespace libcmd
+} //namespace cmdpp
 
 #endif // #ifndef CMDPP_CMD_H

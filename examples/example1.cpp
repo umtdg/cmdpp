@@ -6,7 +6,7 @@
 #include <vector>
 
 // maybe add to cmd.hpp
-#define CmdFuncDecl(name) void name(const libcmd::Cmd::ArgType &args, std::ostream &ostream)
+#define CmdFuncDecl(name) void name(const cmdpp::Cmd::ArgType &args, std::ostream &ostream)
 
 CmdFuncDecl(echo) {
     size_t argc = args.size();
@@ -39,7 +39,7 @@ CmdFuncDecl(foo) {
 }
 
 int main() {
-    libcmd::Cmd cmd("(prompt) ");
+    cmdpp::Cmd cmd("(prompt) ");
     cmd.AddCommand("echo", echo);
     cmd.AddCommand("foocat", foocat);
     cmd.AddCommand("catfoo", catfoo);
