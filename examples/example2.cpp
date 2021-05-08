@@ -1,7 +1,6 @@
 // Example using a file for input and another file for output.
 
 #include "cmdpp/cmd.hpp"
-#include "cmdpp/readline.hpp"
 
 #include <vector>
 #include <string>
@@ -33,6 +32,8 @@ void echo(const cmdpp::Cmd::ArgType &args, std::ostream &ostream) {
 int main() {
     example cmd{"(prompt) "};
     cmd.AddCommand("echo", echo);
+    cmd.AddToQueue("echo First in queue");
+    cmd.AddToQueue("echo Second in queue");
     cmd.CmdLoop();
 
     return 0;

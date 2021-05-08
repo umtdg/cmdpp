@@ -46,18 +46,23 @@ namespace cmdpp {
         PreLoop();
 
         while (running) {
-            if (use_readline) {
-                commandline = readline();
+            if (commandQueue.empty()) {
+                if (useReadline) {
+                    commandline = readline();
 
-                if (commandline.empty())
-                    continue;
-            } else {
-                ostream << prompt << " ";
-                std::getline(istream, commandline);
+                    if (commandline.empty())
+                        continue;
+                } else {
+                    ostream << prompt << " ";
+                    std::getline(istream, commandline);
 
-                if (cmdpp::IsEmptyOrWhitespace(commandline)) {
-                    continue;
+                    if (cmdpp::IsEmptyOrWhitespace(commandline)) {
+                        continue;
+                    }
                 }
+            } else {
+                commandline = commandQueue.front();
+                commandQueue.pop();
             }
 
             PreCmd();
@@ -87,9 +92,13 @@ namespace cmdpp {
         commands[s] = std::move(f);
 
         // if using readline, add commands to vocabulary
-        if (use_readline) {
+        if (useReadline) {
             readline.AddToVocab(s);
         }
+    }
+
+    void Cmd::AddToQueue(const std::string &s) {
+        commandQueue.push(s);
     }
 
 } // namespace cmdpp

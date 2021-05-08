@@ -8,6 +8,7 @@
 #include <string>
 #include <functional>
 #include <unordered_map>
+#include <queue>
 
 namespace cmdpp {
 
@@ -22,10 +23,11 @@ namespace cmdpp {
         std::istream &istream;
 
         bool running;
-        bool use_readline;
+        bool useReadline;
 
         std::string exitCommand;
         std::unordered_map<std::string, CmdFunctionType> commands;
+        std::queue<std::string> commandQueue;
 
         Readline readline;
 
@@ -85,7 +87,7 @@ namespace cmdpp {
                 exitCommand(std::move(_exit_command)),
                 readline(prompt) {
             if (&istream == &std::cin) {
-                use_readline = true;
+                useReadline = true;
                 readline.AddToVocab(exitCommand);
             }
         }
@@ -103,6 +105,8 @@ namespace cmdpp {
         void CmdLoop();
 
         void AddCommand(const std::string &s, CmdFunctionType f);
+
+        void AddToQueue(const std::string &s);
     };
 
 } //namespace cmdpp
