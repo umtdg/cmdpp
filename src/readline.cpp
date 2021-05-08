@@ -9,10 +9,14 @@
 namespace libcmd {
     Readline *currentReadline = nullptr;
 
-    std::string Readline::operator()() {
-        currentReadline = this;
+    Readline::Readline(std::string _prompt) :
+        prompt(std::move(_prompt)) {
 
         rl_attempted_completion_function = &Readline::CommandCompletion;
+    }
+
+    std::string Readline::operator()() {
+        currentReadline = this;
 
         char *line = readline(prompt.c_str());
         if (!line) return "";

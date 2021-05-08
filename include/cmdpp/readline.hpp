@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
-#include <unordered_map>
+#include <memory>
+#include <readline/history.h>
 
 namespace libcmd {
     class Readline {
@@ -11,16 +12,22 @@ namespace libcmd {
         std::vector<std::string> matches;
 
     public:
-        explicit Readline(std::string _prompt) :
-                prompt(std::move(_prompt)) {}
+        explicit Readline(std::string _prompt);
+
+        ~Readline() = default;
 
         std::string operator()();
 
         void AddToVocab(const std::string &s);
 
-        void GenerateMatches(const char *text);
+        Readline(const Readline &) = delete;
+        Readline(Readline &&) = delete;
+        Readline &operator=(const Readline &) = delete;
+        Readline &operator=(Readline &&) = delete;
 
     private:
+        void GenerateMatches(const char *text);
+
         static char **CommandCompletion(const char *text, int start, int end);
 
         static char *CommandGenerator(const char *text, int state);
