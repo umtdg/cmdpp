@@ -1,4 +1,6 @@
-#include <sstream>
+#ifndef CMDPP_UTILS_H
+#define CMDPP_UTILS_H
+
 #include <string>
 #include <vector>
 

@@ -2,6 +2,7 @@
 
 #include <iterator>
 #include <algorithm>
+#include <sstream>
 
 namespace libcmd {
 

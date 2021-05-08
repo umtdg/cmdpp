@@ -5,8 +5,6 @@
 #include <stdexcept>
 #include <string>
 #include <array>
-#include <algorithm>
-#include <utility>
 
 namespace libcmd {
 

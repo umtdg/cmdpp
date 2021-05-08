@@ -1,7 +1,8 @@
+#ifndef CMDPP_READLINE_H
+#define CMDPP_READLINE_H
+
 #include <string>
 #include <vector>
-#include <memory>
-#include <readline/history.h>
 
 namespace libcmd {
     class Readline {
@@ -33,3 +34,5 @@ namespace libcmd {
         static char *CommandGenerator(const char *text, int state);
     };
 } // namespace libcmd
+
+#endif // #ifndef CMDPP_READLINE_H

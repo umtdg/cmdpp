@@ -1,3 +1,6 @@
+#ifndef CMDPP_CMD_H
+#define CMDPP_CMD_H
+
 #include "cmdpp/readline.hpp"
 
 #include <iostream>
@@ -104,3 +107,4 @@ namespace libcmd {
 
 } //namespace libcmd
 
+#endif // #ifndef CMDPP_CMD_H
