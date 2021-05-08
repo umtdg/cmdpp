@@ -16,7 +16,7 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 	set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 endif()
 
-config_compiler_and_linker()
+cmdpp_config_compiler_and_linker()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -25,12 +25,12 @@ set(CMDPP_BUILD_INCLUDE_DIRS
 	"${cmdpp_SOURCE_DIR}")
 include_directories(${CMDPP_BUILD_INCLUDE_DIRS})
 
-cxx_library(cmdpp "${cxx_strict}" src/cmdpp-all.cpp)
+cmdpp_cxx_library(cmdpp "${cxx_strict}" src/cmdpp-all.cpp)
 target_link_libraries(cmdpp readline)
 
 if (CMDPP_BUILD_EXAMPLES)
-	cxx_executable(example1 examples cmdpp examples/example1.cpp)
-	cxx_executable(example2 examples cmdpp examples/example2.cpp)
+	cmdpp_cxx_executable(example1 examples cmdpp examples/example1.cpp)
+	cmdpp_cxx_executable(example2 examples cmdpp examples/example2.cpp)
 endif()
 
 if (CMDPP_BUILD_TESTS)

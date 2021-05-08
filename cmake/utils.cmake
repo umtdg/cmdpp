@@ -1,4 +1,4 @@
-macro(config_compiler_and_linker)
+macro(cmdpp_config_compiler_and_linker)
 	set(cxx_base_flags "-Wall -Wshadow -Werror")
 	set(cxx_strict_flags "-Wextra -Wunused-parameter")
 	set(cxx_exception "-fexceptions")
@@ -8,7 +8,7 @@ macro(config_compiler_and_linker)
 	set(cxx_strict "${cxx_default} ${cxx_strict_flags}")
 endmacro()
 
-function(cxx_library_with_type name type cxx_flags)
+function(cmdpp_cxx_library_with_type name type cxx_flags)
     add_library(${name} ${type} ${ARGN})
     set_target_properties(${name}
             PROPERTIES
@@ -39,15 +39,15 @@ function(cxx_library_with_type name type cxx_flags)
     target_compile_features(${name} PUBLIC cxx_std_17)
 endfunction()
 
-function(cxx_shared_library name cxx_flags)
-    cxx_library_with_type(${name} SHARED "${cxx_flags}" ${ARGN})
+function(cmdpp_cxx_shared_library name cxx_flags)
+    cmdpp_cxx_library_with_type(${name} SHARED "${cxx_flags}" ${ARGN})
 endfunction()
 
-function(cxx_library name cxx_flags)
-    cxx_library_with_type(${name} "" "${cxx_flags}" ${ARGN})
+function(cmdpp_cxx_library name cxx_flags)
+    cmdpp_cxx_library_with_type(${name} "" "${cxx_flags}" ${ARGN})
 endfunction()
 
-function(cxx_executable_with_flags name cxx_flags libs)
+function(cmdpp_cxx_executable_with_flags name cxx_flags libs)
     add_executable(${name} ${ARGN})
     set_target_properties(${name}
             PROPERTIES
@@ -70,8 +70,8 @@ function(cxx_executable_with_flags name cxx_flags libs)
     endforeach()
 endfunction()
 
-function(cxx_executable name dir libs)
-    cxx_executable_with_flags(
+function(cmdpp_cxx_executable name dir libs)
+    cmdpp_cxx_executable_with_flags(
             ${name} "${cxx_default}" "${libs}" "${dir}/${name}.cpp" ${ARGN})
 endfunction()
 
