@@ -6,44 +6,40 @@
 #include <vector>
 
 // maybe add to cmd.hpp
-#define CmdFuncDecl(name) void name(const cmdpp::Cmd::ArgType &args, std::ostream &ostream)
+#define CmdFuncDecl(name) void name(const cmdpp::Cmd::ArgType &args)
 
-CmdFuncDecl(echo) {
+class example : public cmdpp::Cmd {
+public:
+    explicit example(std::string _prompt) : cmdpp::Cmd(std::move(_prompt)) {
+
+    }
+};
+
+cmdpp::Cmd::RetCode Echo(std::ostream &ostream, const cmdpp::Cmd::ArgType &args) {
     size_t argc = args.size();
-    if (argc == 0) return;
+    if (argc == 0)
+        return cmdpp::Cmd::RET_OK;
 
     for (size_t i = 0; i < argc - 1; i++) {
-        ostream << args[i] << ' ';
+        ostream << args[i] << " ";
     }
-    ostream << args[argc - 1] << '\n';
+    ostream << args[argc - 1] << std::endl;
 
-    ostream.flush();
+    return cmdpp::Cmd::RET_OK;
 }
 
-CmdFuncDecl(foocat) {
-    ostream << "foocat\n";
+cmdpp::Cmd::RetCode Exit(std::ostream &ostream, const cmdpp::Cmd::ArgType &args) {
+    (void)args;
 
-    ostream.flush();
-}
+    ostream << "Exiting..." << std::endl;
 
-CmdFuncDecl(catfoo) {
-    ostream << "catfoo\n";
-
-    ostream.flush();
-}
-
-CmdFuncDecl(foo) {
-    ostream << "foo\n";
-
-    ostream.flush();
+    return cmdpp::Cmd::RET_EXIT;
 }
 
 int main() {
-    cmdpp::Cmd cmd("(prompt) ");
-    cmd.AddCommand("echo", echo);
-    cmd.AddCommand("foocat", foocat);
-    cmd.AddCommand("catfoo", catfoo);
-    cmd.AddCommand("foo", foo);
+    example cmd("(prompt) ");
+    cmd.AddCommand("echo", Echo);
+    cmd.AddCommand("exit", Exit);
     cmd.CmdLoop();
 
     return 0;

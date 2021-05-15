@@ -30,7 +30,6 @@ target_link_libraries(cmdpp readline)
 
 if (CMDPP_BUILD_EXAMPLES)
 	cmdpp_cxx_executable(example1 examples cmdpp examples/example1.cpp)
-	cmdpp_cxx_executable(example2 examples cmdpp examples/example2.cpp)
 endif()
 
 if (CMDPP_BUILD_TESTS)

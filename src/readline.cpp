@@ -1,5 +1,6 @@
 #include "cmdpp/readline.hpp"
 #include "cmdpp/utils.hpp"
+#include "cmdpp/color.hpp"
 
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -9,8 +10,11 @@
 namespace cmdpp {
     Readline *currentReadline = nullptr;
 
-    Readline::Readline(std::string _prompt) :
-        prompt(std::move(_prompt)) {
+    Readline::Readline(const std::string &_prompt, bool _useColor) :
+        useColor(_useColor) {
+        prompt = useColor ?
+                Colored::ToColored(_prompt, Colors::COLOR_GREEN, Styles::STYLE_BOLD)
+                : _prompt;
 
         rl_attempted_completion_function = &Readline::CommandCompletion;
     }

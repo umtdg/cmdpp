@@ -11,75 +11,12 @@ A Cmd library for C++. Started for learning purposes.
 * Create an object of `Cmd` class or created derived class, and add your functions using `Cmd::AddCommand`.
 * Call `CmdLoop` to start the application loop.
 
-# Documentation
-
-* [Cmd class](#cmd-class)
-* [Readline class](#readline-class)
-
-## Cmd Class
-A class used to read commands from either user or a file, execute them and print their output either to console or to a file.
-
-### Type definitions
-* `ArgType`: Type of arguments passed to commands
-* `CmdFunctionType`: Type of functions added to `commands`
-
-### Constructors
-* `Cmd(prompt)`: Initializes a new `Cmd` object with default values for each property.
-* `Cmd(prompt, exitCommand)`: Initializes a new `Cmd` object with given `prompt` and `exitCommand` and with default `ostream` and `istream`.
-* `Cmd(prompt, ostream, istream)`: Initializes a new `Cmd` object with given `prompt`, `ostream` and `istream`, defaulting `exitCommand` to `exit`.
-* `Cmd(prompt, exitCommand, ostream, istream)`: Initializes a new `Cmd` object with given `prompt`, `exitCommand`, `ostream` and `istream`.
-
-**Note**: Destructor is default and copy/move constructors and operators are deleted.
-
-### Properties
-#### Protected
-* `std::string prompt`: Prompt that will be printed when taking input.
-* `std::ostream &ostream`: Stream which is where the output is written. Defaults to `std::cout`
-* `std::istream &istream`: Stream which is used to read input. Defaults to `std::cin`
-* `bool running`: Application loop's state. This is set to `false` when exiting.
-* `bool useReadline`: Flag to use whether `Readline` class to get input or not. This is set to `true` automatically when `std::cin` is given to `istream` member.
-* `std::string exitCommand`: Command used to exit the loop. By default, this only sets `running` to `false`. Value defaults to `exit`.
-* `std::unordererd_map<std::string, CmdFunctionType> commands`: Command list to execute given inputs from.
-* `Readline readilne`: An object of `Readline` class to use when `useReadline` is set to `true`.
-* `std::queue<std::string> commandQueue`: Command queue. If queue is not empty, the first command in the queue is used.
-
-### Methods
-#### Public
-* `CmdLoop`: Handles the I/O operations and related pre/post events.
-* `AddCommand`: Adds command to `commands` map. Given function should not be a member function.
-* `AddToQueue`: Adds command line to queue.
-
-#### Protected  
-* `HandleCommands`: Handles given input. Sets `running` to `false` when `exitCommand` is entered. Otherwise, checks the map `commands`, and executes the corresponding function if exists.
-* `ShellExecute`: Executed when a command starting with `!` is entered. Currently, only prints the `stdout` of given command.
-* `PreLoop`: Called before command loop started.
-* `PreCmd`: Called before each `HandleCommands` call.
-* `PostLoop`: Called when command loop finished.
-* `PostCmd`: Called after each `HandleCommands` call.
-* `PreExit`: Called in _exit_command_ before `running` is set to `false`.
-
-## Readline Class
-  A simple wrapper class for GNU Readline. Supports history and auto-completion.
-
-### Constructors
-* `Readline(prompt)`: Initializes a new `Readline` object with given `prompt`.
-
-**Note**: Destructor is default and copy/move constructors and operators are deleted.
-
-### Properties
-No public properties.
-
-### Methods
-* `AddToVocab`: Adds given string to vocabulary. This is used for auto-completion.
-* `operator()()`: Operator overload for function call. Used to get input with GNU Readline.
-
 ## See also
 * [Examples](https://www.github.com/umtdg/cmdpp/tree/master/examples)
 
 # TODO
 - [ ] Functionality to show command helps
-- [ ] Add color option for prompt
-- [ ] Add more examples (or one big example showing the usage clearly)
+- [ ] One example using all possible features
 - [ ] Add comments
 - [ ] Add tests
 - [ ] Also print stderr in `ShellExecute` (Currently, only stdout is printed)
@@ -88,3 +25,4 @@ No public properties.
 # Completed
 - [x] Auto-completion and command history
 - [x] Command queue
+- [x] Add color option for prompt

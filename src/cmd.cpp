@@ -1,5 +1,6 @@
 #include "cmdpp/cmd.hpp"
 #include "cmdpp/utils.hpp"
+#include "cmdpp/color.hpp"
 
 #include <memory>
 #include <stdexcept>
@@ -8,15 +9,31 @@
 
 namespace cmdpp {
 
-    void Cmd::HandleCommands(const std::string &command, const Cmd::ArgType &args) {
-        if (command == exitCommand) {
-            PreExit();
+    Cmd::RetCode Cmd::HandleCommands(const std::string &command, const Cmd::ArgType &args) {
+        switch (command[0]) {
+            case '!':
+                ShellExecute(command.substr(1) + Join(args));
+                return RET_OK;
+            case '?':
+                if (useColor) {
+                    Colored::PrintColored("[!] ", COLOR_YELLOW, STYLE_DEFAULT, ostream);
+                }
+                ostream << "Help\n";
+                return RET_OK;
+        }
 
-            running = false;
-        } else if (commands.find(command) != commands.end()) {
-            commands[command](args, ostream);
+        if (commands.find(command) != commands.end()) {
+            return commands[command](ostream, args);
         } else {
-            ostream << "Command '" << command << "' not found\n";
+            if (useColor) {
+                Colored::PrintColored(
+                        "[!] ",
+                        COLOR_RED,
+                        STYLE_DEFAULT,
+                        ostream);
+            }
+            ostream << "Command '" << command << "' not found\n" << std::endl;
+            return RET_OK;
         }
     }
 
@@ -38,6 +55,24 @@ namespace cmdpp {
         ostream.flush();
     }
 
+    std::string Cmd::Input() {
+        std::string line;
+
+        if (commandQueue.empty()) {
+            if (useReadline) {
+                line = readline();
+            } else {
+                ostream << prompt << " ";
+                std::getline(istream, line);
+            }
+        } else {
+            line = commandQueue.front();
+            commandQueue.pop();
+        }
+
+        return line;
+    }
+
     void Cmd::CmdLoop() {
         running = true;
 
@@ -46,39 +81,22 @@ namespace cmdpp {
         PreLoop();
 
         while (running) {
-            if (commandQueue.empty()) {
-                if (useReadline) {
-                    commandline = readline();
-
-                    if (commandline.empty())
-                        continue;
-                } else {
-                    ostream << prompt << " ";
-                    std::getline(istream, commandline);
-
-                    if (cmdpp::IsEmptyOrWhitespace(commandline)) {
-                        continue;
-                    }
-                }
-            } else {
-                commandline = commandQueue.front();
-                commandQueue.pop();
-            }
+            commandline = Input();
+            if (IsEmptyOrWhitespace(commandline))
+                continue;
 
             PreCmd();
 
-            if (commandline[0] == '!') {
-                ShellExecute(commandline.substr(1));
-
-                continue;
-            }
-
-            std::vector<std::string> args = Split(commandline, ' ');
+            std::vector<std::string> args = Split(commandline);
             std::string command(args[0]);
 
             args.erase(args.begin());
 
-            HandleCommands(command, args);
+            if (HandleCommands(command, args) == RET_EXIT) {
+                PreExit();
+
+                running = false;
+            }
 
             PostCmd();
         }

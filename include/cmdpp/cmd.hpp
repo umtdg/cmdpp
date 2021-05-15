@@ -1,5 +1,5 @@
-#ifndef CMDPP_CMD_H
-#define CMDPP_CMD_H
+#ifndef CMDPP_CMD_HPP
+#define CMDPP_CMD_HPP
 
 #include "cmdpp/readline.hpp"
 
@@ -14,18 +14,23 @@ namespace cmdpp {
 
     class Cmd {
     public:
+        enum RetCode {
+            RET_EXIT = 0, // Used for exiting cmd loop
+            RET_OK = 1
+        };
+
         using ArgType = std::vector<std::string>;
-        using CmdFunctionType = std::function<void(const ArgType &, std::ostream &)>;
+        using CmdFunctionType = std::function<RetCode(std::ostream &, const ArgType &)>;
 
     protected:
         std::string prompt;
         std::ostream &ostream;
         std::istream &istream;
 
-        bool running;
-        bool useReadline;
+        bool running = false;
+        bool useReadline = true;
+        bool useColor = true;
 
-        std::string exitCommand;
         std::unordered_map<std::string, CmdFunctionType> commands;
         std::queue<std::string> commandQueue;
 
@@ -34,7 +39,7 @@ namespace cmdpp {
     protected:
         // Main command handler. This needs to be overridden.
         // Only handles 'exit' command.
-        void HandleCommands(
+        RetCode HandleCommands(
                 const std::string &command,
                 const ArgType &args
         );
@@ -42,6 +47,8 @@ namespace cmdpp {
         // Called when a command entered with '!' prefix.
         // By default, uses popen and do not redirect stderr.
         virtual void ShellExecute(const std::string &commandline);
+
+        std::string Input();
 
         /* PRE/POST EVENT FUNCTIONS */
 
@@ -68,28 +75,16 @@ namespace cmdpp {
     public:
         // Constructor with single _prompt parameter defaults
         // std::cout and std::cin as output and input streams.
-        explicit Cmd(std::string _prompt) :
-            Cmd(std::move(_prompt), "exit") {}
-
-        Cmd(std::string _prompt, std::string _exit_command) :
-            Cmd(std::move(_prompt), std::move(_exit_command), std::cout, std::cin) {}
-
-        Cmd(std::string _prompt, std::ostream &_ostream, std::istream &_istream) :
-            Cmd(std::move(_prompt), "exit", _ostream, _istream)
-        { }
-
-        Cmd(std::string _prompt, std::string _exit_command,
-            std::ostream &_ostream, std::istream &_istream) :
+        explicit Cmd(std::string _prompt,
+                     bool _useColor = true,
+                     std::ostream &_ostream = std::cout,
+                     std::istream &_istream = std::cin) :
                 prompt(std::move(_prompt)),
                 ostream(_ostream),
                 istream(_istream),
-                running(false),
-                exitCommand(std::move(_exit_command)),
-                readline(prompt) {
-            if (&istream == &std::cin) {
-                useReadline = true;
-                readline.AddToVocab(exitCommand);
-            }
+                useColor(_useColor),
+                readline(prompt, _useColor) {
+            useReadline = (&istream == &std::cin);
         }
 
         ~Cmd() = default;
@@ -111,4 +106,4 @@ namespace cmdpp {
 
 } //namespace cmdpp
 
-#endif // #ifndef CMDPP_CMD_H
+#endif // #ifndef CMDPP_CMD_HPP

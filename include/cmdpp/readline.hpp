@@ -1,19 +1,20 @@
-#ifndef CMDPP_READLINE_H
-#define CMDPP_READLINE_H
+#ifndef CMDPP_READLINE_HPP
+#define CMDPP_READLINE_HPP
 
 #include <string>
 #include <vector>
 
 namespace cmdpp {
     class Readline {
-
     private:
         std::string prompt;
         std::vector<std::string> vocab;
         std::vector<std::string> matches;
 
+        bool useColor = false;
+
     public:
-        explicit Readline(std::string _prompt);
+        explicit Readline(const std::string &_prompt, bool _useColor = true);
 
         ~Readline() = default;
 
@@ -35,4 +36,4 @@ namespace cmdpp {
     };
 } // namespace cmdpp
 
-#endif // #ifndef CMDPP_READLINE_H
+#endif // #ifndef CMDPP_READLINE_HPP
