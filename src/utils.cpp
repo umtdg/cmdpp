@@ -1,6 +1,5 @@
 #include "cmdpp/utils.hpp"
 
-#include <iterator>
 #include <algorithm>
 #include <sstream>
 
