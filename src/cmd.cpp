@@ -12,7 +12,7 @@ namespace cmdpp {
     Cmd::RetCode Cmd::HandleCommands(const std::string &command, const Cmd::ArgType &args) {
         switch (command[0]) {
             case '!':
-                ShellExecute(command.substr(1) + Join(args));
+                ShellExecute(command.substr(1) + " " + Join(args));
                 return RET_OK;
             case '?':
                 if (useColor) {
